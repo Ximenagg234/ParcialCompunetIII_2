@@ -5,6 +5,8 @@ import { PaginationDto } from '../student/dto/pagination.dto';
 import { AssignStudentsDto } from './dto/assign-students.dto';
 import { Auth } from 'src/user/decorators/auth.decorator';
 import { ValidRoles } from 'src/user/enums/valid-roles.enum';
+import { User } from 'src/user/entities/user.entity';
+import { GetUser } from 'src/user/decorators/get-user.decorator';
 
 @Controller('program')
 export class ProgramController {
@@ -12,8 +14,8 @@ export class ProgramController {
 
   @Post()
   @Auth(ValidRoles.admin)
-  create(@Body() createProgramDto: CreateProgramDto) {
-    return this.programService.create(createProgramDto);
+  create(@Body() createProgramDto: CreateProgramDto, @GetUser() user: User){
+    return this.programService.create(createProgramDto, user);
   }
 
   @Post('bulk')

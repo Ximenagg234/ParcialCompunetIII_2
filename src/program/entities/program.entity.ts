@@ -1,8 +1,3 @@
-// TODO Reto 1: convierte esta clase en una entidad de TypeORM (tabla "program") con:
-//   - id: UUID generado automáticamente
-//   - name: text, único
-//   - code: text, único
-//   - credits: int
 // TODO Reto 2: relación 1:N con Student -> propiedad `students?: Student[]`
 // TODO Reto 4: relación N:1 con User -> propiedad `createdBy?: User` (el admin que lo creó)
 //
@@ -15,7 +10,6 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "ty
 import { ApiProperty } from "@nestjs/swagger";
 import { Student } from "../../student/entities/student.entity";
 import { User } from "../../user/entities/user.entity";
-import { TypeOrmModule } from "node_modules/@nestjs/typeorm/dist/typeorm.module";
 
 
 // RETO 1
@@ -27,7 +21,7 @@ import { TypeOrmModule } from "node_modules/@nestjs/typeorm/dist/typeorm.module"
 // ☐ Un name o code repetido responde 409 Conflict, no 500 ni una respuesta vacía.
 // ☐ GET /api/program lista los programas y acepta limit y skip (reutilice PaginationDto)
 
-@Entity()
+@Entity("program")
 export class Program {
 
 
@@ -36,16 +30,17 @@ export class Program {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column({ unique: true })
-    @ApiProperty()
+    @ApiProperty({ example: "Computer Science", description: "Program's name" })
+    @Column({ type: "text", unique: true })
     name: string;
 
-    @Column({ unique: true })
-    @ApiProperty()
+
+    @ApiProperty({ example: "CS101", description: "Program's code" })
+    @Column({ type: "text", unique: true })
     code: string;
 
-    @Column()
-    @ApiProperty()
+    @Column({ type: "int" })
+    @ApiProperty({ example: 3, description: "Program's credits" })
     credits: number;
 
     @OneToMany(() => Student, (student) => student.program)
