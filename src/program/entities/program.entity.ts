@@ -24,8 +24,6 @@ import { User } from "../../user/entities/user.entity";
 @Entity("program")
 export class Program {
 
-
-
     @ApiProperty({ example: "CS101", description: "Program's code" })
     @PrimaryGeneratedColumn("uuid")
     id: string;
@@ -47,7 +45,7 @@ export class Program {
     @ApiProperty({ type: () => Student, isArray: true })
     students?: Student[];
 
-    @ManyToOne(() => User, (user) => user.programs)
+    @ManyToOne(() => User)
     @ApiProperty({ type: () => User })
     createdBy?: User;
 
