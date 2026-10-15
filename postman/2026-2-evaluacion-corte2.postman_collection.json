@@ -224,6 +224,20 @@
               ]
             }
           },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const program = pm.response.json();",
+                  "  if (program.id) pm.collectionVariables.set('programId', program.id);",
+                  "}"
+                ]
+              }
+            }
+          ],
           "response": []
         },
         {
